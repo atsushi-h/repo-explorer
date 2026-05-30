@@ -26,6 +26,13 @@ const RepositorySchema = z.object({
       url: z.url(),
     })
     .nullable(),
+  language: z.string().nullable().default(null),
+  stargazersCount: z.number().int().default(0),
+  watchersCount: z.number().int().default(0),
+  forksCount: z.number().int().default(0),
+  openIssuesCount: z.number().int().default(0),
+  topics: z.array(z.string()).default([]),
+  updatedAt: z.string().nullable().default(null),
 })
 
 export const SearchRepositoriesResponseSchema = z.object({

@@ -35,6 +35,13 @@ describe('toGetRepositoryResponse', () => {
         avatarUrl: 'https://github.com/images/error/octocat_happy.gif',
         url: 'https://github.com/octocat',
       },
+      language: null,
+      stargazersCount: 0,
+      watchersCount: 0,
+      forksCount: 0,
+      openIssuesCount: 0,
+      topics: [],
+      updatedAt: null,
     })
   })
 
@@ -82,6 +89,13 @@ describe('toSearchRepositoriesResponse', () => {
             avatarUrl: 'https://github.com/images/error/octocat_happy.gif',
             url: 'https://github.com/octocat',
           },
+          language: null,
+          stargazersCount: 0,
+          watchersCount: 0,
+          forksCount: 0,
+          openIssuesCount: 0,
+          topics: [],
+          updatedAt: null,
         },
       ],
     })

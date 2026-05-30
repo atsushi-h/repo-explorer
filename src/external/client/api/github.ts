@@ -14,6 +14,12 @@ const GITHUB_HEADERS = {
 
 type GitHubResponse<T> = { data: T; status: number }
 
+type RateLimitPayload = { rateLimit: true }
+
+export function isRateLimitPayload(data: unknown): data is RateLimitPayload {
+  return typeof data === 'object' && data !== null && 'rateLimit' in data
+}
+
 async function githubFetch<T>(url: string): Promise<{ data: T; status: number }> {
   const response = await fetch(url, { headers: GITHUB_HEADERS })
 
@@ -28,6 +34,17 @@ async function githubFetch<T>(url: string): Promise<{ data: T; status: number }>
     data = body ? JSON.parse(body) : {}
   } catch {
     throw new Error(`${response.status} ${response.statusText}: invalid response body`)
+  }
+
+  // 403 / 429 はどちらもレート制限の可能性あり。
+  // プライマリ: x-ratelimit-remaining が 0、セカンダリ: retry-after ヘッダーあり。
+  if (response.status === 403 || response.status === 429) {
+    const retryAfter = response.headers.get('retry-after')
+    const remaining = response.headers.get('x-ratelimit-remaining')
+
+    if (retryAfter !== null || remaining === '0') {
+      return { data: { rateLimit: true } as unknown as T, status: response.status }
+    }
   }
 
   return { data: data as T, status: response.status }
