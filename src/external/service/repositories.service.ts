@@ -1,7 +1,7 @@
 import {
-  isRateLimitPayload,
   getRepository as githubGetRepository,
   searchRepositories as githubSearchRepositories,
+  isRateLimitPayload,
 } from '@/external/client/api/github'
 import type {
   GetRepositoryData,
