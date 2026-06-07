@@ -1,4 +1,5 @@
 allowBuilds:
+  github-colors: true
   msw: false
   sharp: true
 ignoredBuiltDependencies:

@@ -47,6 +47,9 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Generate Types
+        run: pnpm next typegen
+
       - name: Type Check
         run: pnpm type:check
 
