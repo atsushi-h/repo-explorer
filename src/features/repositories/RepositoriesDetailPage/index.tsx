@@ -1,34 +1,20 @@
 import { ArrowLeftIcon, ClockIcon, RefreshCwIcon, TriangleAlertIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import type { GetRepositoryResponse } from '@/external/dto/repositories.dto'
-import { getRepositoryQuery } from '@/external/handler/repositories.query.server'
-import { NotFoundError, RateLimitError } from '@/external/utils/errors'
 import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
 import { DetailContent } from './_parts/DetailContent'
+import { fetchRepositoryDetail } from './api'
 
 type Props = {
   params: PageProps<'/[owner]/[repo]'>['params']
 }
 
-export async function RepositoriesDetailPageTemplate({ params }: Props) {
+export async function RepositoriesDetailPage({ params }: Props) {
   const { owner, repo } = await params
+  const { data, errorType } = await fetchRepositoryDetail(owner, repo)
 
-  let data: GetRepositoryResponse | null = null
-  let errorType: 'rateLimit' | 'error' | null = null
-
-  try {
-    data = await getRepositoryQuery({ owner, repo })
-  } catch (e) {
-    if (e instanceof NotFoundError) {
-      notFound()
-    } else if (e instanceof RateLimitError) {
-      errorType = 'rateLimit'
-    } else {
-      errorType = 'error'
-    }
-  }
+  if (errorType === 'notFound') notFound()
 
   return (
     <div className="mx-auto flex w-full max-w-[760px] flex-1 flex-col gap-[18px] px-8 py-7">

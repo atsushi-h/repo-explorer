@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { getRepositoryQuery } from '@/external/handler/repositories.query.server'
-import { RepositoriesDetailPageTemplate } from '@/features/repositories/RepositoriesDetailPageTemplate'
+import { RepositoriesDetailPage } from '@/features/repositories/RepositoriesDetailPage'
 
 export async function generateMetadata({
   params,
@@ -18,5 +18,5 @@ export async function generateMetadata({
 }
 
 export default async function Page(props: PageProps<'/[owner]/[repo]'>) {
-  return <RepositoriesDetailPageTemplate params={props.params} />
+  return <RepositoriesDetailPage params={props.params} />
 }
