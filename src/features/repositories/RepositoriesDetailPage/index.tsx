@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
-import { DetailContent } from './_parts/DetailContent'
 import { fetchRepositoryDetail } from './api'
+import { DetailContent } from './components/DetailContent'
 
 type Props = {
   params: PageProps<'/[owner]/[repo]'>['params']

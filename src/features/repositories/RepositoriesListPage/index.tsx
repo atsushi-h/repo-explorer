@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import { RepositoryList } from '@/features/repositories/shared/components/RepositoryList'
 import { RepositorySearchInput } from '@/features/repositories/shared/components/RepositorySearchInput'
-import { RepositoriesListFallback } from './_parts/RepositoriesListFallback'
 import { fetchRepositoryListResult } from './api'
+import { RepositoriesListFallback } from './components/RepositoriesListFallback'
 import { PER_PAGE } from './constants'
 
 type Props = {
