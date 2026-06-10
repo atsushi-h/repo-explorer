@@ -1,6 +1,6 @@
 'use client'
 
-import type { ListResult } from '@/features/repositories/types/repositoryList'
+import type { ListResult } from '@/features/repositories/shared/types/repositoryList'
 import { RepositoryListPresenter } from './RepositoryListPresenter'
 import { useRepositoryList } from './useRepositoryList'
 

@@ -1,5 +1,5 @@
 import { ClockIcon, CompassIcon, RefreshCwIcon, SearchXIcon, TriangleAlertIcon } from 'lucide-react'
-import type { ListResult } from '@/features/repositories/types/repositoryList'
+import type { ListResult } from '@/features/repositories/shared/types/repositoryList'
 import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
 import { RepositoryPagination } from './_parts/RepositoryPagination'

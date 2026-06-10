@@ -1,7 +1,7 @@
 import { CircleDotIcon, GitForkIcon, StarIcon } from 'lucide-react'
 import Link from 'next/link'
 import type { SearchRepositoriesResponse } from '@/external/dto/repositories.dto'
-import { LangDot } from '@/features/repositories/components/LangDot'
+import { LangDot } from '@/features/repositories/shared/components/LangDot'
 import { Badge } from '@/shared/components/ui/badge'
 import { Avatar } from '@/shared/components/user/Avatar'
 
