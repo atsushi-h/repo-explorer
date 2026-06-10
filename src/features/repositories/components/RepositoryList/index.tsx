@@ -9,7 +9,7 @@ type Props = {
   query: string
 }
 
-export function RepositoryListContainer({ result, query }: Props) {
+export function RepositoryList({ result, query }: Props) {
   const { buildPageUrl, retry } = useRepositoryList(query)
   return <RepositoryListPresenter result={result} buildPageUrl={buildPageUrl} retry={retry} />
 }

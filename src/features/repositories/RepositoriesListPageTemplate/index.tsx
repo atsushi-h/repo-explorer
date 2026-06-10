@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import { searchRepositoriesQuery } from '@/external/handler/repositories.query.server'
 import { RateLimitError } from '@/external/utils/errors'
-import { RepositoryList } from '@/features/repositories/components/client/RepositoryList'
-import { RepositorySearchInput } from '@/features/repositories/components/client/RepositorySearchInput'
+import { RepositoryList } from '@/features/repositories/components/RepositoryList'
+import { RepositorySearchInput } from '@/features/repositories/components/RepositorySearchInput'
 import type { ListResult } from '@/features/repositories/types/repositoryList'
 import { RepositoriesListFallback } from './_parts/RepositoriesListFallback'
 

@@ -1,5 +1,5 @@
 import { ClockIcon, CompassIcon, RefreshCwIcon, SearchXIcon, TriangleAlertIcon } from 'lucide-react'
-import { EmptyState } from '@/features/repositories/components/server/EmptyState'
+import { EmptyState } from '@/features/repositories/components/EmptyState'
 import type { ListResult } from '@/features/repositories/types/repositoryList'
 import { Button } from '@/shared/components/ui/button'
 import { RepositoryPagination } from './_parts/RepositoryPagination'

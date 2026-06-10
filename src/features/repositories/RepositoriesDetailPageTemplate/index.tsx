@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import type { GetRepositoryResponse } from '@/external/dto/repositories.dto'
 import { getRepositoryQuery } from '@/external/handler/repositories.query.server'
 import { NotFoundError, RateLimitError } from '@/external/utils/errors'
-import { EmptyState } from '@/features/repositories/components/server/EmptyState'
+import { EmptyState } from '@/features/repositories/components/EmptyState'
 import { Button } from '@/shared/components/ui/button'
 import { DetailContent } from './_parts/DetailContent'
 
