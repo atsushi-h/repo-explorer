@@ -2,7 +2,7 @@
 
 import { BugIcon, HomeIcon, RefreshCwIcon, TriangleAlertIcon } from 'lucide-react'
 import Link from 'next/link'
-import { EmptyState } from '@/features/repositories/components/server/EmptyState'
+import { EmptyState } from '@/features/repositories/components/EmptyState'
 import { Button } from '@/shared/components/ui/button'
 
 type Props = {

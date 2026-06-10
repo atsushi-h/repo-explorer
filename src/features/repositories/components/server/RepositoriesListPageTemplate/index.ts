@@ -1,1 +1,0 @@
-export { RepositoriesListPageTemplate } from './RepositoriesListPageTemplate'

@@ -1,1 +1,0 @@
-export { RepositoriesDetailPageTemplate } from './RepositoriesDetailPageTemplate'

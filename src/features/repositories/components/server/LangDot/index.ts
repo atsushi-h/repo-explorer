@@ -1,1 +1,0 @@
-export { LangDot } from './LangDot'
