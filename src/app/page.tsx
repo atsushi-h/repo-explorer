@@ -1,5 +1,5 @@
-import { RepositoriesListPageTemplate } from '@/features/repositories/RepositoriesListPageTemplate'
+import { RepositoriesListPage } from '@/features/repositories/RepositoriesListPage'
 
 export default async function Page(props: PageProps<'/'>) {
-  return <RepositoriesListPageTemplate searchParams={props.searchParams} />
+  return <RepositoriesListPage searchParams={props.searchParams} />
 }
