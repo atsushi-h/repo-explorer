@@ -1,6 +1,6 @@
 import { ClockIcon, CompassIcon, RefreshCwIcon, SearchXIcon, TriangleAlertIcon } from 'lucide-react'
-import { EmptyState } from '@/features/repositories/components/EmptyState'
 import type { ListResult } from '@/features/repositories/types/repositoryList'
+import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
 import { RepositoryPagination } from './_parts/RepositoryPagination'
 import { RepositoryRow } from './_parts/RepositoryRow'
@@ -14,7 +14,7 @@ type Props = {
 export function RepositoryListPresenter({ result, buildPageUrl, retry }: Props) {
   if (result.status === 'idle') {
     return (
-      <EmptyState
+      <StateMessage
         icon={CompassIcon}
         title="リポジトリを検索してみましょう"
         desc="キーワードを入力すると、GitHub 上の公開リポジトリを検索できます。リポジトリ名・説明・トピックが対象です。"
@@ -34,7 +34,7 @@ export function RepositoryListPresenter({ result, buildPageUrl, retry }: Props) 
             <b className="text-foreground tabular-nums">0</b> 件のリポジトリ
           </span>
         </div>
-        <EmptyState
+        <StateMessage
           icon={SearchXIcon}
           title="該当するリポジトリが見つかりません"
           desc={`「${result.query}」に一致する結果はありませんでした。`}
@@ -45,7 +45,7 @@ export function RepositoryListPresenter({ result, buildPageUrl, retry }: Props) 
 
   if (result.status === 'error') {
     return (
-      <EmptyState
+      <StateMessage
         icon={TriangleAlertIcon}
         tone="error"
         title="検索中に問題が発生しました"
@@ -62,7 +62,7 @@ export function RepositoryListPresenter({ result, buildPageUrl, retry }: Props) 
 
   if (result.status === 'rateLimit') {
     return (
-      <EmptyState
+      <StateMessage
         icon={ClockIcon}
         tone="warning"
         title="APIのリクエスト上限に達しました"
