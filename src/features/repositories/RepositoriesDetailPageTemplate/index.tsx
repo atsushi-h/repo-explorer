@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import type { GetRepositoryResponse } from '@/external/dto/repositories.dto'
 import { getRepositoryQuery } from '@/external/handler/repositories.query.server'
 import { NotFoundError, RateLimitError } from '@/external/utils/errors'
-import { EmptyState } from '@/features/repositories/components/EmptyState'
+import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
 import { DetailContent } from './_parts/DetailContent'
 
@@ -33,7 +33,7 @@ export async function RepositoriesDetailPageTemplate({ params }: Props) {
   return (
     <div className="mx-auto flex w-full max-w-[760px] flex-1 flex-col gap-[18px] px-8 py-7">
       {errorType === 'rateLimit' && (
-        <EmptyState
+        <StateMessage
           icon={ClockIcon}
           tone="warning"
           title="APIのリクエスト上限に達しました"
@@ -48,7 +48,7 @@ export async function RepositoriesDetailPageTemplate({ params }: Props) {
         />
       )}
       {errorType === 'error' && (
-        <EmptyState
+        <StateMessage
           icon={TriangleAlertIcon}
           tone="error"
           title="リポジトリを読み込めませんでした"

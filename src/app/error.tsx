@@ -2,7 +2,7 @@
 
 import { BugIcon, HomeIcon, RefreshCwIcon, TriangleAlertIcon } from 'lucide-react'
 import Link from 'next/link'
-import { EmptyState } from '@/features/repositories/components/EmptyState'
+import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 export default function ErrorPage({ error, unstable_retry }: Props) {
   return (
-    <EmptyState
+    <StateMessage
       icon={BugIcon}
       tone="error"
       title="予期しないエラーが発生しました"

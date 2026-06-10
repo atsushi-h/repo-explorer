@@ -9,7 +9,7 @@ type Props = {
   meta?: React.ReactNode
 }
 
-export function EmptyState({ icon: Icon, tone = 'muted', title, desc, actions, meta }: Props) {
+export function StateMessage({ icon: Icon, tone = 'muted', title, desc, actions, meta }: Props) {
   const iconClass =
     tone === 'error'
       ? 'bg-destructive/12 text-destructive'

@@ -1,9 +1,9 @@
 import { CircleDotIcon, EyeIcon, GitForkIcon, StarIcon } from 'lucide-react'
 import type { GetRepositoryResponse } from '@/external/dto/repositories.dto'
-import { Avatar } from '@/features/repositories/components/Avatar'
 import { LangDot } from '@/features/repositories/components/LangDot'
 import { Badge } from '@/shared/components/ui/badge'
 import { Card, CardContent } from '@/shared/components/ui/card'
+import { Avatar } from '@/shared/components/user/Avatar'
 
 type Props = {
   data: GetRepositoryResponse
