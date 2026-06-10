@@ -2,8 +2,8 @@ import { ClockIcon, CompassIcon, RefreshCwIcon, SearchXIcon, TriangleAlertIcon }
 import type { ListResult } from '@/features/repositories/shared/types/repositoryList'
 import { StateMessage } from '@/shared/components/feedback/StateMessage'
 import { Button } from '@/shared/components/ui/button'
-import { RepositoryPagination } from './_parts/RepositoryPagination'
-import { RepositoryRow } from './_parts/RepositoryRow'
+import { RepositoryPagination } from './components/RepositoryPagination'
+import { RepositoryRow } from './components/RepositoryRow'
 
 type Props = {
   result: ListResult
