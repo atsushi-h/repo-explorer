@@ -1,6 +1,6 @@
 import { searchRepositoriesQuery } from '@/external/handler/repositories.query.server'
 import { RateLimitError } from '@/external/utils/errors'
-import type { ListResult } from '@/features/repositories/types/repositoryList'
+import type { ListResult } from '@/features/repositories/shared/types/repositoryList'
 import { PER_PAGE } from '../constants'
 
 const GITHUB_SEARCH_MAX_RESULTS = 1000
