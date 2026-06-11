@@ -5,6 +5,8 @@ import { NotFoundError, RateLimitError } from '@/external/utils/errors'
 import { fetchRepositoryDetail } from '.'
 
 vi.mock('@/external/handler/repositories.query.server')
+// cacheLife() は use cache スコープ外(Vitest 実行時)で throw するためモックする
+vi.mock('next/cache', () => ({ cacheLife: vi.fn() }))
 
 const mockRepo: GetRepositoryResponse = {
   id: 1,

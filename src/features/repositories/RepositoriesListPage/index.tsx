@@ -14,18 +14,28 @@ async function RepositoryListData({ query, page }: { query: string; page: number
   return <RepositoryList result={result} query={query} />
 }
 
-export async function RepositoriesListPage({ searchParams }: Props) {
+// searchParams の await(ランタイム API アクセス)は Suspense 境界内で行う必要があるため、
+// この層に閉じ込める(cacheComponents の制約)。
+async function RepositoryListSection({ searchParams }: Props) {
   const { q, page: pageParam = '1' } = await searchParams
   const query = Array.isArray(q) ? q[0] : (q ?? '')
   const page = Math.max(1, Number(Array.isArray(pageParam) ? pageParam[0] : pageParam) || 1)
 
   return (
+    <Suspense key={`${query}-${page}`} fallback={<RepositoriesListFallback count={PER_PAGE} />}>
+      <RepositoryListData query={query} page={page} />
+    </Suspense>
+  )
+}
+
+export function RepositoriesListPage({ searchParams }: Props) {
+  return (
     <div className="mx-auto flex w-full max-w-[760px] flex-1 flex-col gap-[18px] px-8 py-7">
       <Suspense>
         <RepositorySearchInput />
       </Suspense>
-      <Suspense key={`${query}-${page}`} fallback={<RepositoriesListFallback count={PER_PAGE} />}>
-        <RepositoryListData query={query} page={page} />
+      <Suspense fallback={<RepositoriesListFallback count={PER_PAGE} />}>
+        <RepositoryListSection searchParams={searchParams} />
       </Suspense>
     </div>
   )
