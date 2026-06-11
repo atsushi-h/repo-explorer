@@ -4,6 +4,8 @@ import { RateLimitError } from '@/external/utils/errors'
 import { fetchRepositoryListResult } from '.'
 
 vi.mock('@/external/handler/repositories.query.server')
+// cacheLife() は use cache スコープ外(Vitest 実行時)で throw するためモックする
+vi.mock('next/cache', () => ({ cacheLife: vi.fn() }))
 
 beforeEach(() => {
   vi.clearAllMocks()
