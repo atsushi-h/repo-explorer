@@ -1,4 +1,4 @@
-import { CircleDotIcon, GitForkIcon, StarIcon } from 'lucide-react'
+import { StarIcon } from 'lucide-react'
 import Link from 'next/link'
 import type { SearchRepositoriesResponse } from '@/external/dto/repositories.dto'
 import { LangDot } from '@/features/repositories/shared/components/LangDot'
@@ -73,30 +73,6 @@ export function RepositoryRow({ repo }: Props) {
             <span className="font-medium tabular-nums">
               <span className="sr-only">スター数: </span>
               {formatCount(repo.stargazersCount)}
-            </span>
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <GitForkIcon
-              size={15}
-              strokeWidth={1.8}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
-            <span className="font-medium tabular-nums">
-              <span className="sr-only">フォーク数: </span>
-              {formatCount(repo.forksCount)}
-            </span>
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <CircleDotIcon
-              size={15}
-              strokeWidth={1.8}
-              aria-hidden="true"
-              className="text-muted-foreground"
-            />
-            <span className="font-medium tabular-nums">
-              <span className="sr-only">オープンイシュー数: </span>
-              {formatCount(repo.openIssuesCount)}
             </span>
           </span>
           {updatedAt && <span className="text-muted-foreground">{updatedAt}に更新</span>}

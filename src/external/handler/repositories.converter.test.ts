@@ -53,6 +53,15 @@ describe('toGetRepositoryResponse', () => {
 
     expect(result.description).toBeNull()
   })
+
+  test('openIssuesCountOverride を渡すと open_issues_count より優先される', () => {
+    const result = toGetRepositoryResponse(
+      { ...mockGetRepositoryData, open_issues_count: 1284 } as unknown as GetRepositoryData,
+      843,
+    )
+
+    expect(result.openIssuesCount).toBe(843)
+  })
 })
 
 describe('toSearchRepositoriesResponse', () => {

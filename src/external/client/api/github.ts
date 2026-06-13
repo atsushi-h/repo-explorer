@@ -1,6 +1,7 @@
 import type {
   GetRepositoryData,
   GetRepositoryParams,
+  SearchIssuesData,
   SearchRepositoriesData,
   SearchRepositoriesParams,
 } from '@/external/client/api/type'
@@ -71,5 +72,20 @@ export async function getRepository(
 ): Promise<GitHubResponse<GetRepositoryData>> {
   return githubFetch<GetRepositoryData>(
     `${GITHUB_API_BASE}/repos/${encodeURIComponent(params.owner)}/${encodeURIComponent(params.repo)}`,
+  )
+}
+
+/**
+ * Issue 検索
+ * リポジトリ情報の open_issues_count は Open Issue と Open PR の合算のため、
+ * PR を除いた Issue のみの件数を total_count から得る目的で使う。per_page=1 は
+ * 本体に件数だけがあればよくレスポンスを最小化するため。
+ * @see https://docs.github.com/ja/rest/search/search?apiVersion=2026-03-10#search-issues-and-pull-requests
+ */
+export async function searchIssues(params: {
+  q: string
+}): Promise<GitHubResponse<SearchIssuesData>> {
+  return githubFetch<SearchIssuesData>(
+    `${GITHUB_API_BASE}/search/issues?q=${encodeURIComponent(params.q)}&per_page=1`,
   )
 }
