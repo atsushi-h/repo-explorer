@@ -28,7 +28,7 @@ const RepositorySchema = z.object({
     .nullable(),
   language: z.string().nullable().default(null),
   stargazersCount: z.number().int().default(0),
-  watchersCount: z.number().int().default(0),
+  subscribersCount: z.number().int().default(0),
   forksCount: z.number().int().default(0),
   openIssuesCount: z.number().int().default(0),
   topics: z.array(z.string()).default([]),

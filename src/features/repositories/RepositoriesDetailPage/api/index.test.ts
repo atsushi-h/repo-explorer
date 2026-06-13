@@ -21,7 +21,7 @@ const mockRepo: GetRepositoryResponse = {
   },
   language: 'JavaScript',
   stargazersCount: 100,
-  watchersCount: 50,
+  subscribersCount: 50,
   forksCount: 30,
   openIssuesCount: 5,
   topics: [],
