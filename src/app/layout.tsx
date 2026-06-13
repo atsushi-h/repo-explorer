@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Suspense } from 'react'
 import './globals.css'
 import { PageHeader } from '@/shared/components/layout/PageHeader'
+import { PageHeaderPresenter } from '@/shared/components/layout/PageHeader/PageHeaderPresenter'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,7 +29,9 @@ export default function RootLayout({
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <div className="flex h-full flex-col">
-          <PageHeader />
+          <Suspense fallback={<PageHeaderPresenter href="/" />}>
+            <PageHeader />
+          </Suspense>
           <main className="flex flex-1 flex-col">{children}</main>
         </div>
       </body>
