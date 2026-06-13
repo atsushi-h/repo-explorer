@@ -13,7 +13,7 @@ export function DetailContent({ data }: Props) {
   const owner = data.owner?.login ?? ''
   const stats = [
     { icon: StarIcon, label: 'Star 数', value: data.stargazersCount },
-    { icon: EyeIcon, label: 'Watcher 数', value: data.watchersCount },
+    { icon: EyeIcon, label: 'Watcher 数', value: data.subscribersCount },
     { icon: GitForkIcon, label: 'Fork 数', value: data.forksCount },
     { icon: CircleDotIcon, label: 'Issue 数', value: data.openIssuesCount },
   ]
