@@ -12,7 +12,11 @@ import {
   toGetRepositoryResponse,
   toSearchRepositoriesResponse,
 } from '@/external/handler/repositories.converter'
-import { getRepository, searchRepositories } from '@/external/service/repositories.service'
+import {
+  getOpenIssuesCount,
+  getRepository,
+  searchRepositories,
+} from '@/external/service/repositories.service'
 
 export async function searchRepositoriesQuery(
   request: SearchRepositoriesRequest,
@@ -34,6 +38,15 @@ export async function getRepositoryQuery(
   const result = GetRepositoryRequestSchema.safeParse(request)
   if (!result.success) throw new Error('リクエストが不正です')
 
-  const repository = await getRepository({ owner: result.data.owner, repo: result.data.repo })
-  return toGetRepositoryResponse(repository)
+  const { owner, repo } = result.data
+  // open_issues_count は PR を含むため、Issue のみの件数を Search API から取得して上書きする。
+  // 並列実行しつつ、存在しないリポジトリ等の判定を保つため repo 側のエラーを優先して投げる
+  // (素の Promise.all は最初に reject した方が surface し、404 が search の 422 に競り負けうる)。
+  const [repoResult, issuesResult] = await Promise.allSettled([
+    getRepository({ owner, repo }),
+    getOpenIssuesCount({ owner, repo }),
+  ])
+  if (repoResult.status === 'rejected') throw repoResult.reason
+  if (issuesResult.status === 'rejected') throw issuesResult.reason
+  return toGetRepositoryResponse(repoResult.value, issuesResult.value)
 }

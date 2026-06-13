@@ -6,7 +6,12 @@ import {
   SearchRepositoriesResponseSchema,
 } from '@/external/dto/repositories.dto'
 
-export function toGetRepositoryResponse(data: GetRepositoryData): GetRepositoryResponse {
+// openIssuesCountOverride: open_issues_count は PR を含むため、Search API で得た
+// Issue のみの件数で上書きする用途。未指定時は API の open_issues_count を使う。
+export function toGetRepositoryResponse(
+  data: GetRepositoryData,
+  openIssuesCountOverride?: number,
+): GetRepositoryResponse {
   return GetRepositoryResponseSchema.parse({
     id: data.id,
     name: data.name,
@@ -22,7 +27,7 @@ export function toGetRepositoryResponse(data: GetRepositoryData): GetRepositoryR
     stargazersCount: data.stargazers_count ?? 0,
     subscribersCount: data.subscribers_count ?? 0,
     forksCount: data.forks_count ?? 0,
-    openIssuesCount: data.open_issues_count ?? 0,
+    openIssuesCount: openIssuesCountOverride ?? data.open_issues_count ?? 0,
     topics: data.topics ?? [],
     updatedAt: data.updated_at ?? null,
   })

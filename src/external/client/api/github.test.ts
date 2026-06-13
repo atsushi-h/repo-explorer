@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { getRepository, isRateLimitPayload, searchRepositories } from '@/external/client/api/github'
+import {
+  getRepository,
+  isRateLimitPayload,
+  searchIssues,
+  searchRepositories,
+} from '@/external/client/api/github'
 
 // github.ts が参照するのは status / statusText / headers.get() / text() のみ。
 // Response コンストラクタの null ボディ制約(304 など)を避けるため最小スタブで代用する。
@@ -206,5 +211,30 @@ describe('getRepository', () => {
     const result = await getRepository({ owner: 'octocat', repo: 'missing' })
 
     expect(result).toEqual({ data: notFoundBody, status: 404 })
+  })
+})
+
+describe('searchIssues', () => {
+  // レート制限 / 304 / 不正 JSON の分岐は共通 githubFetch を介して searchRepositories 側で
+  // 網羅済みのため、ここでは searchIssues 固有の URL 構築と total_count 返却のみ検証する。
+  const issuesBody = { total_count: 843, incomplete_results: false, items: [] }
+
+  it('200 + 正常 JSON のとき data と status を返す', async () => {
+    fetchMock.mockResolvedValue(mockResponse({ status: 200, body: JSON.stringify(issuesBody) }))
+
+    const result = await searchIssues({ q: 'repo:react/react type:issue state:open' })
+
+    expect(result).toEqual({ data: issuesBody, status: 200 })
+  })
+
+  it('q がエンコードされ per_page=1 で fetch する', async () => {
+    fetchMock.mockResolvedValue(mockResponse({ body: JSON.stringify(issuesBody) }))
+
+    await searchIssues({ q: 'repo:react/react type:issue state:open' })
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://api.github.com/search/issues?q=repo%3Areact%2Freact%20type%3Aissue%20state%3Aopen&per_page=1',
+      expect.anything(),
+    )
   })
 })

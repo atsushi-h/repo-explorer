@@ -1,7 +1,15 @@
 import { describe, expect, it, vi } from 'vitest'
 import * as githubApi from '@/external/client/api/github'
-import type { GetRepositoryData, SearchRepositoriesData } from '@/external/client/api/type'
-import { getRepository, searchRepositories } from '@/external/service/repositories.service'
+import type {
+  GetRepositoryData,
+  SearchIssuesData,
+  SearchRepositoriesData,
+} from '@/external/client/api/type'
+import {
+  getOpenIssuesCount,
+  getRepository,
+  searchRepositories,
+} from '@/external/service/repositories.service'
 
 vi.mock('@/external/client/api/github')
 
@@ -76,6 +84,44 @@ describe('searchRepositories', () => {
 
     await expect(searchRepositories({ q: 'react' })).rejects.toThrow(
       'リポジトリ一覧の取得に失敗しました',
+    )
+  })
+})
+
+describe('getOpenIssuesCount', () => {
+  it('status 200 のとき、total_count を返す', async () => {
+    vi.mocked(githubApi.searchIssues).mockResolvedValue({
+      data: { total_count: 843 } as SearchIssuesData,
+      status: 200,
+    })
+
+    const result = await getOpenIssuesCount({ owner: 'react', repo: 'react' })
+
+    expect(result).toBe(843)
+  })
+
+  it('rateLimit ペイロードのとき、RateLimitError をスローする', async () => {
+    vi.mocked(githubApi.searchIssues).mockResolvedValue({
+      data: { rateLimit: true } as unknown as SearchIssuesData,
+      status: 403,
+    })
+    vi.mocked(githubApi.isRateLimitPayload).mockReturnValue(true)
+
+    await expect(getOpenIssuesCount({ owner: 'react', repo: 'react' })).rejects.toThrow(
+      'APIのリクエスト上限に達しました',
+    )
+
+    vi.mocked(githubApi.isRateLimitPayload).mockReset()
+  })
+
+  it('status が 200 以外のとき、「Issue 数の取得に失敗しました」エラーをスローする', async () => {
+    vi.mocked(githubApi.searchIssues).mockResolvedValue({
+      data: {} as SearchIssuesData,
+      status: 422,
+    })
+
+    await expect(getOpenIssuesCount({ owner: 'react', repo: 'react' })).rejects.toThrow(
+      'Issue 数の取得に失敗しました',
     )
   })
 })
